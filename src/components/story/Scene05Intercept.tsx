@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { AgentNode, SecurityGate, ToolCallPacket } from "../visuals/TechnicalObjects";
+import React, { useRef, useState, useEffect } from "react";
 
 export const Scene05Intercept: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,68 +23,67 @@ export const Scene05Intercept: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Animation states based on scroll
-  const interceptPhase = scrollProgress > 0.4;
-  const analyzePhase = scrollProgress > 0.6;
+  const actionMove = Math.min(1, scrollProgress * 3); // 0 to 0.33
+  const sentinelDrop = Math.min(1, Math.max(0, (scrollProgress - 0.3) * 3)); // 0.3 to 0.66
+  
+  const revealIntent = scrollProgress > 0.6;
+  const revealProvenance = scrollProgress > 0.75;
+  const revealCapability = scrollProgress > 0.9;
 
   return (
-    <section ref={containerRef} className="relative w-full min-h-[200vh] bg-charcoal-900">
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-[250vh] bg-charcoal-800 overflow-hidden">
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
         
-        <h2 className={`absolute top-24 font-display text-5xl md:text-7xl uppercase tracking-tightest transition-opacity duration-700 ${interceptPhase ? 'opacity-100 text-offwhite' : 'opacity-0'}`}>
-          Sentinel <span className="text-vermilion-500">Intercepts.</span>
-        </h2>
-
-        <div className="w-full max-w-6xl flex items-center justify-between gap-4 mt-24">
-          <AgentNode className="scale-75 md:scale-100 shrink-0" />
-          
-          <div className="flex-1 relative h-32 mx-4 md:mx-12">
-            {/* The wire */}
-            <div className="absolute top-1/2 left-0 w-full h-1 bg-offwhite/10 -translate-y-1/2" />
-            
-            {/* Moving Packet */}
-            <div 
-              className="absolute top-1/2 -translate-y-1/2 transition-all duration-1000 ease-out z-10"
-              style={{
-                left: interceptPhase ? '50%' : '10%',
-                transform: `translate(${interceptPhase ? '-150%' : '0'}, -50%)`
-              }}
-            >
-              <ToolCallPacket toolName="read_demo_secret" className={interceptPhase ? '!border-vermilion-500' : ''} />
-            </div>
-
-            {/* Sentinel Gate */}
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-1000 ${interceptPhase ? 'opacity-100 scale-100' : 'opacity-0 scale-50'} z-20`}>
-              <SecurityGate state={interceptPhase ? 'block' : 'idle'} />
-            </div>
+        {/* Background Labels */}
+        <div className="absolute inset-0 flex justify-between items-center px-12 lg:px-32 opacity-20 pointer-events-none">
+          <div className="font-display text-4xl lg:text-7xl uppercase tracking-widest text-offwhite-muted transform -rotate-90 origin-left">
+            Agent Action
           </div>
-
-          <div className="shrink-0 flex flex-col items-center gap-2 opacity-30">
-            <div className="text-xs font-mono tracking-widest uppercase">Target</div>
-            <div className="w-16 h-16 border-2 border-dashed border-offwhite-muted flex items-center justify-center font-display text-2xl">
-              TOOL
-            </div>
+          <div className="font-display text-4xl lg:text-7xl uppercase tracking-widest text-offwhite-muted transform rotate-90 origin-right">
+            System Execution
           </div>
         </div>
 
-        {/* Evaluation Concepts Teaser */}
-        <div className={`absolute bottom-24 w-full px-8 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto transition-all duration-1000 transform ${analyzePhase ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-          
-          <div className="border-l-4 border-vermilion-500 pl-6 py-2 bg-charcoal-800/50 backdrop-blur-sm">
-            <h3 className="font-display text-3xl tracking-tightest uppercase text-offwhite mb-2">Intent</h3>
-            <p className="font-sans text-xs uppercase tracking-widest text-offwhite-muted">What did the user ask?</p>
+        {/* The Action moving left to right */}
+        <div 
+          className="absolute z-10 w-full flex items-center px-8 lg:px-32"
+          style={{ transform: `translateX(calc(${actionMove * 40}vw))` }}
+        >
+          <div className="font-mono text-3xl md:text-5xl lg:text-[4vw] text-offwhite bg-charcoal-900 border border-offwhite/20 px-8 py-4 shadow-xl">
+            read_demo_secret()
           </div>
-          
-          <div className="border-l-4 border-vermilion-500 pl-6 py-2 bg-charcoal-800/50 backdrop-blur-sm">
-            <h3 className="font-display text-3xl tracking-tightest uppercase text-offwhite mb-2">Provenance</h3>
-            <p className="font-sans text-xs uppercase tracking-widest text-offwhite-muted">Where did this come from?</p>
-          </div>
-          
-          <div className="border-l-4 border-vermilion-500 pl-6 py-2 bg-charcoal-800/50 backdrop-blur-sm">
-            <h3 className="font-display text-3xl tracking-tightest uppercase text-offwhite mb-2">Capability</h3>
-            <p className="font-sans text-xs uppercase tracking-widest text-offwhite-muted">Is this action privileged?</p>
-          </div>
+        </div>
 
+        {/* The Giant Sentinel Barrier */}
+        <div 
+          className="absolute z-20 w-8 md:w-16 lg:w-32 bg-offwhite flex flex-col justify-center items-center shadow-[0_0_100px_rgba(238,233,223,0.3)] transition-transform duration-100 ease-out"
+          style={{ 
+            height: '150vh',
+            transform: `translateY(${(1 - sentinelDrop) * -150}%) rotate(5deg)`
+          }}
+        >
+          <div className="font-display text-[8rem] lg:text-[15rem] text-charcoal-900 uppercase tracking-tightest leading-none transform -rotate-90">
+            SENTINEL
+          </div>
+        </div>
+
+        {/* The Evaluations */}
+        <div className="absolute z-30 flex flex-col gap-4 lg:gap-8 items-center" style={{ opacity: sentinelDrop }}>
+          <div className={`transition-all duration-700 transform ${revealIntent ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}>
+            <h3 className="font-display text-5xl md:text-7xl lg:text-[8vw] uppercase tracking-tightest text-offwhite mix-blend-difference">
+              INTENT
+            </h3>
+          </div>
+          <div className={`transition-all duration-700 transform ${revealProvenance ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}>
+            <h3 className="font-display text-5xl md:text-7xl lg:text-[8vw] uppercase tracking-tightest text-vermilion-500 mix-blend-difference">
+              PROVENANCE
+            </h3>
+          </div>
+          <div className={`transition-all duration-700 transform ${revealCapability ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}>
+            <h3 className="font-display text-5xl md:text-7xl lg:text-[8vw] uppercase tracking-tightest text-offwhite mix-blend-difference">
+              CAPABILITY
+            </h3>
+          </div>
         </div>
 
       </div>

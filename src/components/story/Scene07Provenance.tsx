@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { ProvenanceTrail } from "../visuals/TechnicalObjects";
+import React, { useRef, useState, useEffect } from "react";
 
 export const Scene07Provenance: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,74 +23,56 @@ export const Scene07Provenance: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const getOpacity = (threshold: number) => scrollProgress > threshold ? 1 : 0.2;
+  const reveal1 = scrollProgress > 0.15;
+  const reveal2 = scrollProgress > 0.35;
+  const reveal3 = scrollProgress > 0.55;
+  const reveal4 = scrollProgress > 0.75;
 
   return (
-    <section ref={containerRef} className="relative w-full min-h-[200vh] bg-charcoal-800">
-      <div className="sticky top-0 h-screen flex flex-col justify-center px-12 lg:px-24 overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-[250vh] bg-charcoal-900 overflow-hidden">
+      <div className="sticky top-0 h-screen flex flex-col justify-center px-8 lg:px-32 max-w-7xl mx-auto">
         
-        <h2 className="font-display text-huge leading-[0.85] tracking-tightest uppercase text-offwhite mb-16 max-w-5xl">
-          Why is<br />
-          <span className="text-offwhite-muted">the agent</span><br />
-          doing this?
+        <h2 className="font-display text-4xl text-offwhite-muted uppercase tracking-widest mb-16 opacity-50">
+          WHY?
         </h2>
 
-        <div className="relative w-full max-w-7xl mx-auto h-[400px]">
-          {/* Timeline / Chain Background */}
-          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-charcoal-700 -translate-y-1/2" />
-          
-          <div className="flex justify-between items-center h-full relative z-10">
-            {/* Step 1 */}
-            <div className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: getOpacity(0.2) }}>
-              <div className="text-xs font-mono uppercase tracking-widest text-offwhite-muted">Origin</div>
-              <div className="bg-charcoal-900 border border-offwhite/20 px-6 py-3 font-display text-2xl tracking-widest text-offwhite">
-                USER REQUEST
-              </div>
+        <div className="flex flex-col">
+          {/* USER REQUEST */}
+          <div className={`transition-all duration-700 transform ${reveal1 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
+            <div className="font-display text-5xl uppercase text-offwhite tracking-tightest">
+              USER REQUEST
             </div>
+            <div className={`w-1 h-12 lg:h-16 border-l-2 border-dashed my-4 ml-8 transition-colors duration-1000 ${reveal3 ? 'border-vermilion-500' : 'border-offwhite/20'}`}></div>
+          </div>
 
-            {/* Step 2 */}
-            <div className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: getOpacity(0.3) }}>
-              <div className="text-xs font-mono uppercase tracking-widest text-offwhite-muted">Tool</div>
-              <div className="bg-charcoal-900 border border-offwhite/20 px-6 py-3 font-mono text-xl text-offwhite-muted">
-                search_issues
-              </div>
+          {/* SEARCH ISSUES */}
+          <div className={`transition-all duration-700 transform ${reveal2 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
+            <div className="font-display text-6xl lg:text-7xl uppercase text-offwhite tracking-tightest ml-8">
+              SEARCH ISSUES
             </div>
+            <div className={`w-1 h-12 lg:h-16 border-l-2 border-dashed my-4 ml-16 transition-colors duration-1000 ${reveal3 ? 'border-vermilion-500' : 'border-offwhite/20'}`}></div>
+          </div>
 
-            {/* Step 3: Malicious Origin */}
-            <div className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: getOpacity(0.4) }}>
-              <div className="text-xs font-mono uppercase tracking-widest text-vermilion-500">Tainted Data</div>
-              <div className="bg-vermilion-500 border border-vermilion-500 px-6 py-3 font-display text-2xl tracking-widest text-charcoal-900">
-                MALICIOUS SERVER
-              </div>
+          {/* MALICIOUS SERVER */}
+          <div className={`transition-all duration-700 transform ${reveal3 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
+            <div className="font-display text-7xl lg:text-8xl uppercase text-vermilion-500 tracking-tightest ml-16 leading-[0.85]">
+              MALICIOUS<br/>RESEARCH<br/>SERVER
             </div>
+            <div className="w-1 h-12 lg:h-16 border-l-2 border-dashed border-vermilion-500 my-4 ml-24"></div>
+          </div>
 
-            {/* Step 4: Agent generation */}
-            <div className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: getOpacity(0.5) }}>
-              <div className="text-xs font-mono uppercase tracking-widest text-offwhite-muted">Generation</div>
-              <div className="bg-charcoal-900 border border-offwhite/20 px-6 py-3 font-display text-2xl tracking-widest text-offwhite">
-                AGENT MODEL
-              </div>
+          {/* POISONED RESPONSE */}
+          <div className={`transition-all duration-700 transform ${reveal4 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
+            <div className="font-display text-[9vw] lg:text-[7vw] uppercase text-vermilion-500 tracking-tightest ml-24 leading-none mix-blend-screen drop-shadow-[0_0_15px_rgba(229,59,18,0.5)]">
+              POISONED RESPONSE
             </div>
-
-            {/* Step 5: Final Attempt */}
-            <div className="flex flex-col items-center gap-4 transition-opacity duration-500" style={{ opacity: getOpacity(0.6) }}>
-              <div className="text-xs font-mono uppercase tracking-widest text-vermilion-500">Privileged Target</div>
-              <div className="bg-charcoal-900 border-2 border-vermilion-500 px-6 py-3 font-mono text-xl text-vermilion-500">
-                read_demo_secret()
-              </div>
+            <div className="w-1 h-12 lg:h-16 border-l-2 border-dashed border-vermilion-500 my-4 ml-32"></div>
+            
+            {/* THE FINAL CALL */}
+            <div className="font-mono text-3xl lg:text-5xl text-charcoal-900 bg-vermilion-500 inline-block px-4 py-2 mt-4 ml-32 font-bold uppercase shadow-[0_0_30px_rgba(229,59,18,0.8)]">
+              read_demo_secret()
             </div>
           </div>
-          
-          {/* Animated Trail Overlay */}
-          <div className="absolute top-1/2 left-0 w-full h-[50px] -translate-y-1/2 pointer-events-none" style={{ opacity: getOpacity(0.4) }}>
-            <ProvenanceTrail animate={scrollProgress > 0.4} />
-          </div>
-        </div>
-
-        <div className={`mt-16 text-center transition-all duration-1000 transform ${scrollProgress > 0.7 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <p className="font-sans text-xl uppercase tracking-widest text-vermilion-500 max-w-2xl mx-auto border border-vermilion-500/30 bg-vermilion-500/10 py-4">
-            Sentinel traces the causal chain. The data origin is tainted.
-          </p>
         </div>
 
       </div>
