@@ -23,13 +23,13 @@ export const Scene07Provenance: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const reveal1 = scrollProgress > 0.15;
-  const reveal2 = scrollProgress > 0.35;
-  const reveal3 = scrollProgress > 0.55;
-  const reveal4 = scrollProgress > 0.75;
+  const reveal1 = scrollProgress > 0.05;
+  const reveal2 = scrollProgress > 0.15;
+  const reveal3 = scrollProgress > 0.25;
+  const reveal4 = scrollProgress > 0.40;
 
   return (
-    <section ref={containerRef} className="relative w-full h-[250vh] bg-charcoal-900 overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-[150vh] bg-charcoal-900 overflow-hidden">
       <div className="sticky top-0 h-screen flex flex-col justify-center px-8 lg:px-32 max-w-7xl mx-auto">
         
         <h2 className="font-display text-4xl text-offwhite-muted uppercase tracking-widest mb-16 opacity-50">

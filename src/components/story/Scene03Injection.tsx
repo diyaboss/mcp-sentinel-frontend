@@ -24,12 +24,15 @@ export const Scene03Injection: React.FC = () => {
   }, []);
 
   // Map progress to distinct visual states
-  const docEntry = Math.min(1, Math.max(0, (scrollProgress - 0.2) * 3)); // 0.2 to 0.53
-  const taintReveal = Math.min(1, Math.max(0, (scrollProgress - 0.5) * 3)); // 0.5 to 0.83
-  const statementEntry = Math.min(1, Math.max(0, (scrollProgress - 0.7) * 3)); // 0.7 to 1.0
+  // Early trigger: 0.1 to 0.4
+  const docEntry = Math.min(1, Math.max(0, (scrollProgress - 0.1) * 3.33));
+  // 0.3 to 0.6
+  const taintReveal = Math.min(1, Math.max(0, (scrollProgress - 0.3) * 3.33)); 
+  // 0.5 to 0.8
+  const statementEntry = Math.min(1, Math.max(0, (scrollProgress - 0.5) * 3.33));
 
   return (
-    <section ref={containerRef} className="relative w-full h-[250vh] bg-charcoal-900 border-t border-offwhite/5">
+    <section ref={containerRef} className="relative w-full h-[150vh] bg-charcoal-900 border-t border-offwhite/5">
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden px-8 lg:px-24">
         
         {/* Background / Left - User Intent */}

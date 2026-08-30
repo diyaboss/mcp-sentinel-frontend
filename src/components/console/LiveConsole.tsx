@@ -2,18 +2,12 @@ import React, { useState } from "react";
 import type { SentinelEvent, GuardStatus } from "../../types/event";
 import { ConsoleEventStream } from "./ConsoleEventStream";
 import { ConsoleEventDetail } from "./ConsoleEventDetail";
+import { useEvents } from "../../hooks/useEvents";
 
-interface Props {
-  events: SentinelEvent[];
-  connected: boolean;
-  source: "mock" | "live";
-  onToggleSource: () => void;
-  guard: GuardStatus;
-  onToggleGuard: () => void;
-}
-
-export const LiveConsole: React.FC<Props> = ({ events, connected, source, onToggleSource, guard, onToggleGuard }) => {
+export const LiveConsole: React.FC = () => {
+  const { events, connected, source, toggleSource, guard, toggleGuard } = useEvents();
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
   
   const selectedEvent = events.find(e => e.id === selectedId) || events[0] || null;
 
@@ -28,7 +22,7 @@ export const LiveConsole: React.FC<Props> = ({ events, connected, source, onTogg
           </div>
           
           <button 
-            onClick={onToggleSource}
+            onClick={toggleSource}
             className="text-xs font-mono uppercase text-offwhite-muted hover:text-offwhite transition-colors"
           >
             Switch to {source === 'mock' ? 'Live' : 'Mock'}

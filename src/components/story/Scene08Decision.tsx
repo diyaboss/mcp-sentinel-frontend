@@ -23,10 +23,10 @@ export const Scene08Decision: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const showNeverExecuted = scrollProgress > 0.5;
+  const showNeverExecuted = scrollProgress > 0.3;
 
   return (
-    <section ref={containerRef} className="relative w-full h-[200vh] bg-charcoal-900 overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-[120vh] bg-charcoal-900 overflow-hidden">
       <div className="sticky top-0 h-screen flex flex-col justify-center items-center">
         
         <div className={`transition-all duration-1000 transform absolute w-full flex flex-col items-center justify-center ${showNeverExecuted ? 'scale-150 opacity-0 blur-xl pointer-events-none' : 'scale-100 opacity-100 blur-0'}`}>

@@ -23,15 +23,15 @@ export const Scene05Intercept: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const actionMove = Math.min(1, scrollProgress * 3); // 0 to 0.33
-  const sentinelDrop = Math.min(1, Math.max(0, (scrollProgress - 0.3) * 3)); // 0.3 to 0.66
+  const actionMove = Math.min(1, Math.max(0, scrollProgress * 4)); // 0 to 0.25
+  const sentinelDrop = Math.min(1, Math.max(0, (scrollProgress - 0.15) * 4)); // 0.15 to 0.4
   
-  const revealIntent = scrollProgress > 0.6;
-  const revealProvenance = scrollProgress > 0.75;
-  const revealCapability = scrollProgress > 0.9;
+  const revealIntent = scrollProgress > 0.3;
+  const revealProvenance = scrollProgress > 0.45;
+  const revealCapability = scrollProgress > 0.6;
 
   return (
-    <section ref={containerRef} className="relative w-full h-[250vh] bg-charcoal-800 overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-[150vh] bg-charcoal-800 overflow-hidden">
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
         
         {/* Background Labels */}

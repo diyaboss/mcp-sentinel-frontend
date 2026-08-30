@@ -1,36 +1,24 @@
-import { useState } from "react";
-import { useEvents } from "./hooks/useEvents";
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { StoryExperience } from "./components/story/StoryExperience";
-import { EditorialNav } from "./components/visuals/EditorialNav";
 import { LiveConsole } from "./components/console/LiveConsole";
+import { AppShell } from "./components/AppShell";
+import { ConfigureScreen } from "./components/product/ConfigureScreen";
+import { HistoryScreen } from "./components/product/HistoryScreen";
+import { SettingsScreen } from "./components/product/SettingsScreen";
 
 export default function App() {
-  const [route, setRoute] = useState<"story" | "console">("story");
-  const { events, guard, toggleGuard, connected, source, toggleSource } = useEvents();
-
-  if (route === "story") {
-    return (
-      <>
-        <EditorialNav onNavigate={(r) => { if(r === 'live') setRoute('console') }} />
-        <StoryExperience onNavigate={(r) => { if(r === 'live') setRoute('console') }} />
-      </>
-    );
-  }
-
   return (
-    <div className="w-full h-screen bg-charcoal-900 flex flex-col overflow-hidden text-offwhite selection:bg-vermilion-500 selection:text-charcoal-900">
-      <EditorialNav onNavigate={(r) => { if(r === 'story' || r === 'how-it-works') setRoute('story') }} isConsole />
-      
-      <div className="flex-1 mt-[80px] overflow-hidden">
-        <LiveConsole 
-          events={events}
-          connected={connected}
-          source={source}
-          onToggleSource={toggleSource}
-          guard={guard}
-          onToggleGuard={toggleGuard}
-        />
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<StoryExperience />} />
+      <Route path="/app" element={<AppShell />}>
+        <Route index element={<Navigate to="/app/live" replace />} />
+        <Route path="live" element={<LiveConsole />} />
+        <Route path="configure" element={<ConfigureScreen />} />
+        <Route path="history" element={<HistoryScreen />} />
+        <Route path="settings" element={<SettingsScreen />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }

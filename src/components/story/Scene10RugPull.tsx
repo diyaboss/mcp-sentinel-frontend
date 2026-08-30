@@ -24,10 +24,10 @@ export const Scene10RugPull: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isMutated = scrollProgress > 0.5;
+  const isMutated = scrollProgress > 0.2;
 
   return (
-    <section ref={containerRef} className="relative w-full min-h-[150vh] bg-charcoal-900 border-t border-offwhite/10">
+    <section ref={containerRef} className="relative w-full min-h-[120vh] bg-charcoal-900 border-t border-offwhite/10">
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
         
         <div className="w-full max-w-6xl px-12 lg:px-24">

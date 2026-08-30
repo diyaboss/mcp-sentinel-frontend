@@ -23,11 +23,11 @@ export const Scene04Compromised: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const statementOpacity = Math.min(1, scrollProgress * 3);
-  const codeScale = Math.max(1, 1.2 - (scrollProgress * 0.2));
+  const statementOpacity = Math.min(1, Math.max(0, (scrollProgress - 0.1) * 3));
+  const codeScale = Math.max(1, 1.2 - (Math.max(0, scrollProgress - 0.1) * 0.4));
 
   return (
-    <section ref={containerRef} className="relative w-full h-[150vh] bg-vermilion-500 selection:bg-charcoal-900 selection:text-vermilion-500 overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-[120vh] bg-vermilion-500 selection:bg-charcoal-900 selection:text-vermilion-500 overflow-hidden">
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
         
         <div className="relative z-10 w-full px-8 lg:px-24 flex flex-col items-center justify-center text-center">
