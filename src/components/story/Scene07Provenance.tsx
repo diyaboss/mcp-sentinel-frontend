@@ -54,7 +54,7 @@ export const Scene07Provenance: React.FC = () => {
           </div>
 
           {/* MALICIOUS SERVER */}
-          <div className={`transition-all duration-700 transform ${reveal3 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
+          <div className={`transition-all duration-700 transform relative z-20 ${reveal3 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
             <div className="font-display text-7xl lg:text-8xl uppercase text-vermilion-500 tracking-tightest ml-16 leading-[0.85]">
               MALICIOUS<br/>RESEARCH<br/>SERVER
             </div>
@@ -62,14 +62,14 @@ export const Scene07Provenance: React.FC = () => {
           </div>
 
           {/* POISONED RESPONSE */}
-          <div className={`transition-all duration-700 transform ${reveal4 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
-            <div className="font-display text-[9vw] lg:text-[7vw] uppercase text-vermilion-500 tracking-tightest ml-24 leading-none mix-blend-screen drop-shadow-[0_0_15px_rgba(229,59,18,0.5)]">
+          <div className={`transition-all duration-700 transform relative z-30 ${reveal4 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
+            <div className="font-display text-[9vw] lg:text-[7vw] uppercase text-vermilion-500 tracking-tightest ml-24 leading-[0.85]">
               POISONED RESPONSE
             </div>
             <div className="w-1 h-12 lg:h-16 border-l-2 border-dashed border-vermilion-500 my-4 ml-32"></div>
             
             {/* THE FINAL CALL */}
-            <div className="font-mono text-3xl lg:text-5xl text-charcoal-900 bg-vermilion-500 inline-block px-4 py-2 mt-4 ml-32 font-bold uppercase shadow-[0_0_30px_rgba(229,59,18,0.8)]">
+            <div className="font-mono text-3xl lg:text-5xl text-charcoal-900 bg-vermilion-500 inline-block px-4 py-2 mt-4 ml-32 font-bold uppercase z-30 relative">
               read_demo_secret()
             </div>
           </div>
